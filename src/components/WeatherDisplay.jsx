@@ -20,8 +20,8 @@ const WeatherDisplay = () => {
         </div>
         <div className="weather">
           <img className="weather__icon" src={sunny} alt="sunny" />
-          <div className="weather__temperature">24°C</div>
           <div className="weather__type">Clear</div>
+          <div className="weather__temperature">24°</div>
         </div>
         <div className="date">
           <p>Wednesday, July 31</p>
@@ -29,12 +29,12 @@ const WeatherDisplay = () => {
         <div className="data">
           <div className="data__item data__item--humidity">
             <div className="data__name">Humidity</div>
-            <i className="fa-solid fa-droplet"></i>
+            <i className="data__icon fa-solid fa-droplet"></i>
             <div className="data__value">35 %</div>
           </div>
           <div className="data__item data__item--wind">
             <div className="data__name">Wind</div>
-            <i className="fa-solid fa-wind"></i>
+            <i className="data__icon fa-solid fa-wind"></i>
             <div className="data__value">4 km/h</div>
           </div>
         </div>
