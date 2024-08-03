@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import sunny from "../assets/icons/icon_sun.svg";
+import cloudy from "../assets/icons/icon_cloudy.svg";
+import foggy from "../assets/icons/icon_foggy.svg";
+import rainy from "../assets/icons/icon_rainy.svg";
+import snowy from "../assets/icons/icon_snowy.svg";
+import sunny from "../assets/icons/icon_sunny.svg";
+import thundery from "../assets/icons/icon_thundery.svg";
+import windy from "../assets/icons/icon_windy.svg";
 
 const WeatherDisplay = () => {
   const [weatherData, setWeatherData] = useState({});
@@ -16,6 +22,7 @@ const WeatherDisplay = () => {
           if (response.ok) {
             const fetchedData = await response.json();
             setWeatherData(fetchedData);
+            console.log(fetchedData);
             localStorage.setItem("lastSearchedCity", city);
           } else {
             console.error("Network error");
@@ -49,6 +56,32 @@ const WeatherDisplay = () => {
     setLocation("");
   };
 
+  const weatherIcons = {
+    Clear: sunny,
+    Clouds: cloudy,
+    Squall: windy,
+    Tornado: windy,
+    Drizzle: rainy,
+    Rain: rainy,
+    Snow: snowy,
+    Haze: foggy,
+    Mist: foggy,
+    Smoke: foggy,
+    Dust: foggy,
+    Fog: foggy,
+    Sand: foggy,
+    Ash: foggy,
+    Thunderstorm: thundery,
+  };
+
+  const weatherIcon = weatherData.weather
+    ? weatherIcons[weatherData.weather[0].main]
+    : null;
+
+  const weatherCondition = weatherData.weather
+    ? weatherData.weather[0].main
+    : null;
+
   return (
     <div className="container">
       <div className="app">
@@ -73,10 +106,12 @@ const WeatherDisplay = () => {
           </div>
         </div>
         <div className="weather">
-          <img className="weather__icon" src={sunny} alt="sunny" />
-          <div className="weather__type">
-            {weatherData.weather ? weatherData.weather[0].main : null}
-          </div>
+          <img
+            className="weather__icon"
+            src={weatherIcon}
+            alt={weatherCondition}
+          />
+          <div className="weather__condition">{weatherCondition}</div>
           <div className="weather__temperature">
             {weatherData.main ? `${Math.floor(weatherData.main.temp)}°` : null}
           </div>
