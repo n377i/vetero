@@ -22,7 +22,6 @@ const WeatherDisplay = () => {
           if (response.ok) {
             const fetchedData = await response.json();
             setWeatherData(fetchedData);
-            console.log(fetchedData);
             localStorage.setItem("lastSearchedCity", city);
           } else {
             console.error("Network error");
