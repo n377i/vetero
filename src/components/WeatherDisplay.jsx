@@ -1,37 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import sunny from "../assets/icons/icon_sun.svg";
 
 const WeatherDisplay = () => {
   const [weatherData, setWeatherData] = useState({});
   const [location, setLocation] = useState("");
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+  const defaultCity = "Berlin";
+
+  const fetchWeatherData = useCallback(
+    async (city) => {
+      if (city && city.trim() !== "") {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=Metric&appid=${apiKey}`;
+        try {
+          const response = await fetch(url);
+          if (response.ok) {
+            const fetchedData = await response.json();
+            setWeatherData(fetchedData);
+            localStorage.setItem("lastSearchedCity", city);
+          } else {
+            console.error("Network error");
+          }
+        } catch (error) {
+          console.error("Error fetching weather:", error);
+        }
+      }
+    },
+    [apiKey]
+  );
+
+  useEffect(() => {
+    const lastSearchedCity = localStorage.getItem("lastSearchedCity");
+    fetchWeatherData(lastSearchedCity || defaultCity);
+  }, [fetchWeatherData, defaultCity]);
 
   const handleInputChange = (event) => {
     setLocation(event.target.value);
   };
 
-  const hanldeKeyDown = (event) => {
+  const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      fetchWeatherData();
+      fetchWeatherData(location);
+      setLocation("");
     }
   };
 
-  const fetchWeatherData = async () => {
-    if (location && location.trim() !== "") {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=Metric&appid=${apiKey}`;
-      try {
-        const response = await fetch(url);
-        if (response.ok) {
-          const fetchedData = await response.json();
-          setWeatherData(fetchedData);
-          setLocation("");
-        } else {
-          console.error("Network error");
-        }
-      } catch (error) {
-        console.error("Error fetching weather:", error);
-      }
-    }
+  const handleSearchClick = () => {
+    fetchWeatherData(location);
+    setLocation("");
   };
 
   return (
@@ -49,11 +64,11 @@ const WeatherDisplay = () => {
               placeholder="Enter location"
               value={location}
               onChange={handleInputChange}
-              onKeyDown={hanldeKeyDown}
+              onKeyDown={handleKeyDown}
             />
             <i
               className="search__icon-search fa-solid fa-magnifying-glass"
-              onClick={fetchWeatherData}
+              onClick={handleSearchClick}
             ></i>
           </div>
         </div>
