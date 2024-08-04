@@ -12,11 +12,11 @@
 <defs>
 <linearGradient id="paint0_linear_280_163" x1="79.9027" y1="1.3724" x2="140.193" y2="153.113" gradientUnits="userSpaceOnUse">
 <stop stop-color="white"/>
-<stop offset="0.708333" stop-color="#9DDCFF" stop-opacity="0.69"/>
+<stop offset="1" stop-color="#93CAEA" stop-opacity="0.69"/>
 </linearGradient>
 <linearGradient id="paint1_linear_280_163" x1="119.193" y1="-50.1111" x2="202.515" y2="214.081" gradientUnits="userSpaceOnUse">
 <stop stop-color="white"/>
-<stop offset="0.713542" stop-color="#85C6EC" stop-opacity="0.71"/>
+<stop offset="1" stop-color="#7EA7BE" stop-opacity="0.71"/>
 </linearGradient>
 <linearGradient id="paint2_linear_280_163" x1="198.282" y1="107.365" x2="83.689" y2="243.32" gradientUnits="userSpaceOnUse">
 <stop stop-color="#F1F1F1"/>
