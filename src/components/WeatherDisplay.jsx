@@ -1,11 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
-import cloudy from "../assets/icons/icon_cloudy.svg";
-import foggy from "../assets/icons/icon_foggy.svg";
-import rainy from "../assets/icons/icon_rainy.svg";
-import snowy from "../assets/icons/icon_snowy.svg";
-import sunny from "../assets/icons/icon_sunny.svg";
-import thundery from "../assets/icons/icon_thundery.svg";
-import windy from "../assets/icons/icon_windy.svg";
+import cloudyIcon from "../assets/icons/icon_cloudy.svg";
+import foggyIcon from "../assets/icons/icon_foggy.svg";
+import rainyIcon from "../assets/icons/icon_rainy.svg";
+import snowyIcon from "../assets/icons/icon_snowy.svg";
+import sunnyIcon from "../assets/icons/icon_sunny.svg";
+import thunderyIcon from "../assets/icons/icon_thundery.svg";
+import windyIcon from "../assets/icons/icon_windy.svg";
+import cloudyImage from "../assets/images/img_cloudy.jpg";
+import foggyImage from "../assets/images/img_foggy.jpg";
+import rainyImage from "../assets/images/img_rainy.jpg";
+import snowyImage from "../assets/images/img_snowy.jpg";
+import sunnyImage from "../assets/images/img_sunny.jpg";
+import thunderyImage from "../assets/images/img_thundery.jpg";
+import windyImage from "../assets/images/img_windy.jpg";
 
 const WeatherDisplay = () => {
   const [weatherData, setWeatherData] = useState({});
@@ -56,33 +63,58 @@ const WeatherDisplay = () => {
   };
 
   const weatherIcons = {
-    Clear: sunny,
-    Clouds: cloudy,
-    Squall: windy,
-    Tornado: windy,
-    Drizzle: rainy,
-    Rain: rainy,
-    Snow: snowy,
-    Haze: foggy,
-    Mist: foggy,
-    Smoke: foggy,
-    Dust: foggy,
-    Fog: foggy,
-    Sand: foggy,
-    Ash: foggy,
-    Thunderstorm: thundery,
+    Clear: sunnyIcon,
+    Clouds: cloudyIcon,
+    Squall: windyIcon,
+    Tornado: windyIcon,
+    Drizzle: rainyIcon,
+    Rain: rainyIcon,
+    Snow: snowyIcon,
+    Haze: foggyIcon,
+    Mist: foggyIcon,
+    Smoke: foggyIcon,
+    Dust: foggyIcon,
+    Fog: foggyIcon,
+    Sand: foggyIcon,
+    Ash: foggyIcon,
+    Thunderstorm: thunderyIcon,
   };
 
   const weatherIcon = weatherData.weather
     ? weatherIcons[weatherData.weather[0].main]
     : null;
 
+  const backgroundImages = {
+    Clear: sunnyImage,
+    Clouds: cloudyImage,
+    Squall: windyImage,
+    Tornado: windyImage,
+    Drizzle: rainyImage,
+    Rain: rainyImage,
+    Snow: snowyImage,
+    Haze: foggyImage,
+    Mist: foggyImage,
+    Smoke: foggyImage,
+    Dust: foggyImage,
+    Fog: foggyImage,
+    Sand: foggyImage,
+    Ash: foggyImage,
+    Thunderstorm: thunderyImage,
+  };
+
+  const backgroundImage = weatherData.weather
+    ? backgroundImages[weatherData.weather[0].main]
+    : "src/assets/images/img_cloudy.jpg";
+
   const weatherCondition = weatherData.weather
     ? weatherData.weather[0].main
     : null;
 
   return (
-    <div className="container">
+    <div
+      className="container"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className="app">
         <div className="search">
           <div className="search__top">
