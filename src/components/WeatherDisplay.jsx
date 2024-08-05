@@ -15,8 +15,9 @@ import thunderyImage from "../assets/images/img_thundery.jpg";
 import windyImage from "../assets/images/img_windy.jpg";
 
 const WeatherDisplay = () => {
-  const [weatherData, setWeatherData] = useState({});
+  const [weatherData, setWeatherData] = useState(null);
   const [location, setLocation] = useState("");
+  const [noResults, setNoResults] = useState(false);
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
   const defaultCity = "Berlin";
 
@@ -29,12 +30,16 @@ const WeatherDisplay = () => {
           if (response.ok) {
             const fetchedData = await response.json();
             setWeatherData(fetchedData);
+            setNoResults(false);
             localStorage.setItem("lastSearchedCity", city);
           } else {
-            console.error("Network error");
+            setWeatherData(null);
+            setNoResults(true);
           }
         } catch (error) {
           console.error("Error fetching weather:", error);
+          setWeatherData(null);
+          setNoResults(true);
         }
       }
     },
@@ -80,7 +85,7 @@ const WeatherDisplay = () => {
     Thunderstorm: thunderyIcon,
   };
 
-  const weatherIcon = weatherData.weather
+  const weatherIcon = weatherData?.weather
     ? weatherIcons[weatherData.weather[0].main]
     : null;
 
@@ -102,11 +107,11 @@ const WeatherDisplay = () => {
     Thunderstorm: thunderyImage,
   };
 
-  const backgroundImage = weatherData.weather
+  const backgroundImage = weatherData?.weather
     ? backgroundImages[weatherData.weather[0].main]
     : "src/assets/images/img_cloudy.jpg";
 
-  const weatherCondition = weatherData.weather
+  const weatherCondition = weatherData?.weather
     ? weatherData.weather[0].main
     : null;
 
@@ -134,11 +139,11 @@ const WeatherDisplay = () => {
     "November",
     "December",
   ];
-  const dayofWeek = daysOfWeek[date.getDay()];
+  const dayOfWeek = daysOfWeek[date.getDay()];
   const month = months[date.getMonth()];
   const dayOfMonth = date.getDate();
 
-  const currentDate = `${dayofWeek}, ${month} ${dayOfMonth}`;
+  const currentDate = `${dayOfWeek}, ${month} ${dayOfMonth}`;
 
   return (
     <div
@@ -147,10 +152,12 @@ const WeatherDisplay = () => {
     >
       <div className="app">
         <div className="search">
-          <div className="search__top">
-            <i className="search__icon-location fa-solid fa-location-dot"></i>
-            <div className="location">{weatherData.name}</div>
-          </div>
+          {weatherData?.name ? (
+            <div className="search__top">
+              <i className="search__icon-location fa-solid fa-location-dot"></i>
+              <div className="location">{weatherData.name}</div>
+            </div>
+          ) : null}
           <div className="search__bar">
             <input
               className="search__input"
@@ -166,36 +173,47 @@ const WeatherDisplay = () => {
             ></i>
           </div>
         </div>
-        <div className="weather">
-          <img
-            className="weather__icon"
-            src={weatherIcon}
-            alt={weatherCondition}
-          />
-          <div className="weather__condition">{weatherCondition}</div>
-          <div className="weather__temperature">
-            {weatherData.main ? `${Math.floor(weatherData.main.temp)}°` : null}
+        {noResults ? (
+          <div className="no-results">
+            <i className="no-results__icon fa-solid fa-magnifying-glass"></i>
+            <p>No results found.</p>
           </div>
-        </div>
-        <div className="date">
-          <p>{currentDate}</p>
-        </div>
-        <div className="data">
-          <div className="data__item data__item--humidity">
-            <div className="data__name">Humidity</div>
-            <i className="data__icon fa-solid fa-droplet"></i>
-            <div className="data__value">
-              {weatherData.main ? weatherData.main.humidity : null} %
+        ) : (
+          <>
+            <div className="weather">
+              <img
+                className="weather__icon"
+                src={weatherIcon}
+                alt={weatherCondition}
+              />
+              <div className="weather__condition">{weatherCondition}</div>
+              <div className="weather__temperature">
+                {weatherData?.main
+                  ? `${Math.floor(weatherData.main.temp)}°`
+                  : null}
+              </div>
             </div>
-          </div>
-          <div className="data__item data__item--wind">
-            <div className="data__name">Wind</div>
-            <i className="data__icon fa-solid fa-wind"></i>
-            <div className="data__value">
-              {weatherData.wind ? weatherData.wind.speed : null} km/h
+            <div className="date">
+              <p>{currentDate}</p>
             </div>
-          </div>
-        </div>
+            <div className="data">
+              <div className="data__item data__item--humidity">
+                <div className="data__name">Humidity</div>
+                <i className="data__icon fa-solid fa-droplet"></i>
+                <div className="data__value">
+                  {weatherData?.main ? weatherData.main.humidity : null} %
+                </div>
+              </div>
+              <div className="data__item data__item--wind">
+                <div className="data__name">Wind</div>
+                <i className="data__icon fa-solid fa-wind"></i>
+                <div className="data__value">
+                  {weatherData?.wind ? weatherData.wind.speed : null} km/h
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
