@@ -110,6 +110,36 @@ const WeatherDisplay = () => {
     ? weatherData.weather[0].main
     : null;
 
+  const date = new Date();
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const dayofWeek = daysOfWeek[date.getDay()];
+  const month = months[date.getMonth()];
+  const dayOfMonth = date.getDate();
+
+  const currentDate = `${dayofWeek}, ${month} ${dayOfMonth}`;
+
   return (
     <div
       className="container"
@@ -148,7 +178,7 @@ const WeatherDisplay = () => {
           </div>
         </div>
         <div className="date">
-          <p>Wednesday, July 31</p>
+          <p>{currentDate}</p>
         </div>
         <div className="data">
           <div className="data__item data__item--humidity">
