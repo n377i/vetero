@@ -72,6 +72,10 @@
   cursor: pointer;
 }
 
+.loader {
+  margin-top: 2rem;
+}
+
 .no-results {
   display: flex;
   flex-direction: column;
