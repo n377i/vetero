@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import loadingGif from "../assets/loading.gif";
 import cloudyIcon from "../assets/icons/icon_cloudy.svg";
 import foggyIcon from "../assets/icons/icon_foggy.svg";
 import rainyIcon from "../assets/icons/icon_rainy.svg";
@@ -17,6 +18,7 @@ import windyImage from "../assets/images/img_windy.jpg";
 const WeatherDisplay = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
   const defaultCity = "Berlin";
@@ -24,6 +26,7 @@ const WeatherDisplay = () => {
   const fetchWeatherData = useCallback(
     async (city) => {
       if (city && city.trim() !== "") {
+        setLoading(true);
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=Metric&appid=${apiKey}`;
         try {
           const response = await fetch(url);
@@ -40,6 +43,8 @@ const WeatherDisplay = () => {
           console.error("Error fetching weather:", error);
           setWeatherData(null);
           setNoResults(true);
+        } finally {
+          setLoading(false);
         }
       }
     },
@@ -173,7 +178,9 @@ const WeatherDisplay = () => {
             ></i>
           </div>
         </div>
-        {noResults ? (
+        {loading ? (
+          <img className="loader" src={loadingGif} alt="loading" />
+        ) : noResults ? (
           <div className="no-results">
             <i className="no-results__icon fa-solid fa-magnifying-glass"></i>
             <p>No results found.</p>
