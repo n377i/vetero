@@ -3,6 +3,10 @@
 :root {
   --primary: #2d3349;
   --secondary: #434656;
+  --temperature: linear-gradient(to right bottom, #2d3349, #5b6075);
+  --temperature-day: linear-gradient(to right bottom, #2d3349, #5b6075);
+  --temperature-night: linear-gradient(to right bottom, #fafafa, #d0d0d0);
+  --input: #434656;
   --white: #fff;
 }
 
