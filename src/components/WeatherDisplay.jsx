@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import loadingGif from "../assets/loading.gif";
 import cloudyIcon from "../assets/icons/icon_cloudy.svg";
 import foggyIcon from "../assets/icons/icon_foggy.svg";
+import moonIcon from "../assets/icons/icon_moon.svg";
 import rainyIcon from "../assets/icons/icon_rainy.svg";
 import snowyIcon from "../assets/icons/icon_snowy.svg";
 import sunnyIcon from "../assets/icons/icon_sunny.svg";
@@ -20,6 +21,7 @@ const WeatherDisplay = () => {
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
+
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
   const defaultCity = "Berlin";
 
@@ -56,6 +58,35 @@ const WeatherDisplay = () => {
     fetchWeatherData(lastSearchedCity || defaultCity);
   }, [fetchWeatherData, defaultCity]);
 
+  const isDaytime = useCallback(() => {
+    if (!weatherData) return true;
+    const currentTime = weatherData.dt;
+    const sunriseTime = weatherData.sys.sunrise;
+    const sunsetTime = weatherData.sys.sunset;
+
+    return currentTime >= sunriseTime && currentTime < sunsetTime;
+  }, [weatherData]);
+
+  const daytime = isDaytime();
+
+  useEffect(() => {
+    if (daytime) {
+      document.documentElement.style.setProperty("--primary", "#2d3349");
+      document.documentElement.style.setProperty("--secondary", "#434656");
+      document.documentElement.style.setProperty(
+        "--temperature",
+        "var(--temperature-day)"
+      );
+    } else {
+      document.documentElement.style.setProperty("--primary", "#fafafa");
+      document.documentElement.style.setProperty("--secondary", "#fff");
+      document.documentElement.style.setProperty(
+        "--temperature",
+        "var(--temperature-night)"
+      );
+    }
+  }, [daytime]);
+
   const handleInputChange = (event) => {
     setLocation(event.target.value);
   };
@@ -73,7 +104,7 @@ const WeatherDisplay = () => {
   };
 
   const weatherIcons = {
-    Clear: sunnyIcon,
+    Clear: daytime ? sunnyIcon : moonIcon,
     Clouds: cloudyIcon,
     Squall: windyIcon,
     Tornado: windyIcon,
@@ -89,10 +120,6 @@ const WeatherDisplay = () => {
     Ash: foggyIcon,
     Thunderstorm: thunderyIcon,
   };
-
-  const weatherIcon = weatherData?.weather
-    ? weatherIcons[weatherData.weather[0].main]
-    : null;
 
   const backgroundImages = {
     Clear: sunnyImage,
@@ -112,10 +139,12 @@ const WeatherDisplay = () => {
     Thunderstorm: thunderyImage,
   };
 
+  const weatherIcon = weatherData?.weather
+    ? weatherIcons[weatherData.weather[0].main]
+    : null;
   const backgroundImage = weatherData?.weather
     ? backgroundImages[weatherData.weather[0].main]
-    : "src/assets/images/img_cloudy.jpg";
-
+    : cloudyImage;
   const weatherCondition = weatherData?.weather
     ? weatherData.weather[0].main
     : null;
@@ -147,7 +176,6 @@ const WeatherDisplay = () => {
   const dayOfWeek = daysOfWeek[date.getDay()];
   const month = months[date.getMonth()];
   const dayOfMonth = date.getDate();
-
   const currentDate = `${dayOfWeek}, ${month} ${dayOfMonth}`;
 
   return (
@@ -155,6 +183,7 @@ const WeatherDisplay = () => {
       className="container"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
+      {!daytime ? <div className="overlay"></div> : null}
       <div className="app">
         <div className="search">
           {weatherData?.name ? (
