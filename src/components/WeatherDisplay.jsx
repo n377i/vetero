@@ -1,20 +1,20 @@
 import { useState, useEffect, useCallback } from "react";
 import loadingGif from "../assets/loading.gif";
-import cloudyIcon from "../assets/icons/icon_cloudy.svg";
-import foggyIcon from "../assets/icons/icon_foggy.svg";
+import cloudsIcon from "../assets/icons/icon_clouds.svg";
+import atmosphereIcon from "../assets/icons/icon_atmosphere.svg";
 import moonIcon from "../assets/icons/icon_moon.svg";
-import rainyIcon from "../assets/icons/icon_rainy.svg";
-import snowyIcon from "../assets/icons/icon_snowy.svg";
-import sunnyIcon from "../assets/icons/icon_sunny.svg";
-import thunderyIcon from "../assets/icons/icon_thundery.svg";
-import windyIcon from "../assets/icons/icon_windy.svg";
-import cloudyImage from "../assets/images/img_cloudy.jpg";
-import foggyImage from "../assets/images/img_foggy.jpg";
-import rainyImage from "../assets/images/img_rainy.jpg";
-import snowyImage from "../assets/images/img_snowy.jpg";
-import sunnyImage from "../assets/images/img_sunny.jpg";
-import thunderyImage from "../assets/images/img_thundery.jpg";
-import windyImage from "../assets/images/img_windy.jpg";
+import rainIcon from "../assets/icons/icon_rain.svg";
+import snowIcon from "../assets/icons/icon_snow.svg";
+import sunIcon from "../assets/icons/icon_sun.svg";
+import thunderstormIcon from "../assets/icons/icon_thunderstorm.svg";
+import windIcon from "../assets/icons/icon_wind.svg";
+import cloudsImage from "../assets/images/img_clouds.jpg";
+import atmosphereImage from "../assets/images/img_atmosphere.jpg";
+import rainImage from "../assets/images/img_rain.jpg";
+import snowImage from "../assets/images/img_snow.jpg";
+import sunImage from "../assets/images/img_sun.jpg";
+import thunderstormImage from "../assets/images/img_thunderstorm.jpg";
+import windImage from "../assets/images/img_wind.jpg";
 
 const WeatherDisplay = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -104,39 +104,39 @@ const WeatherDisplay = () => {
   };
 
   const weatherIcons = {
-    Clear: daytime ? sunnyIcon : moonIcon,
-    Clouds: cloudyIcon,
-    Squall: windyIcon,
-    Tornado: windyIcon,
-    Drizzle: rainyIcon,
-    Rain: rainyIcon,
-    Snow: snowyIcon,
-    Haze: foggyIcon,
-    Mist: foggyIcon,
-    Smoke: foggyIcon,
-    Dust: foggyIcon,
-    Fog: foggyIcon,
-    Sand: foggyIcon,
-    Ash: foggyIcon,
-    Thunderstorm: thunderyIcon,
+    Clear: daytime ? sunIcon : moonIcon,
+    Clouds: cloudsIcon,
+    Squall: windIcon,
+    Tornado: windIcon,
+    Drizzle: rainIcon,
+    Rain: rainIcon,
+    Snow: snowIcon,
+    Haze: atmosphereIcon,
+    Mist: atmosphereIcon,
+    Smoke: atmosphereIcon,
+    Dust: atmosphereIcon,
+    Fog: atmosphereIcon,
+    Sand: atmosphereIcon,
+    Ash: atmosphereIcon,
+    Thunderstorm: thunderstormIcon,
   };
 
   const backgroundImages = {
-    Clear: sunnyImage,
-    Clouds: cloudyImage,
-    Squall: windyImage,
-    Tornado: windyImage,
-    Drizzle: rainyImage,
-    Rain: rainyImage,
-    Snow: snowyImage,
-    Haze: foggyImage,
-    Mist: foggyImage,
-    Smoke: foggyImage,
-    Dust: foggyImage,
-    Fog: foggyImage,
-    Sand: foggyImage,
-    Ash: foggyImage,
-    Thunderstorm: thunderyImage,
+    Clear: sunImage,
+    Clouds: cloudsImage,
+    Squall: windImage,
+    Tornado: windImage,
+    Drizzle: rainImage,
+    Rain: rainImage,
+    Snow: snowImage,
+    Haze: atmosphereImage,
+    Mist: atmosphereImage,
+    Smoke: atmosphereImage,
+    Dust: atmosphereImage,
+    Fog: atmosphereImage,
+    Sand: atmosphereImage,
+    Ash: atmosphereImage,
+    Thunderstorm: thunderstormImage,
   };
 
   const weatherIcon = weatherData?.weather
@@ -144,7 +144,7 @@ const WeatherDisplay = () => {
     : null;
   const backgroundImage = weatherData?.weather
     ? backgroundImages[weatherData.weather[0].main]
-    : cloudyImage;
+    : cloudsImage;
   const weatherCondition = weatherData?.weather
     ? weatherData.weather[0].main
     : null;
