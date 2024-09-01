@@ -176,7 +176,8 @@ const WeatherDisplay = () => {
   const dayOfWeek = daysOfWeek[date.getDay()];
   const month = months[date.getMonth()];
   const dayOfMonth = date.getDate();
-  const currentDate = `${dayOfWeek}, ${month} ${dayOfMonth}`;
+  const year = date.getFullYear();
+  const currentDate = `${dayOfWeek}, ${month} ${dayOfMonth}, ${year}`;
 
   return (
     <div
