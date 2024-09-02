@@ -1,8 +1,5 @@
-# React + Vite
+# Vetero - Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+For this React app I used the OpenWeatherMap API to display the current weather for any location on Earth. In addition to the date, temperature, weather condition, humidity, and wind speed, the background image matching the displayed weather is also shown and at night it gets dark.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### &raquo; [View Demo](https://vetero.vercel.app)
