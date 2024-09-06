@@ -78,7 +78,7 @@
   top: 50%;
   transform: translateY(-50%);
   right: 0.875rem;
-  color: var(--primary);
+  color: #2d3349;
   cursor: pointer;
 }
 
